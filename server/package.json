@@ -1,0 +1,18 @@
+{
+  "name": "server",
+  "packageManager": "yarn@3.5.1",
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@types/uuid": "^10.0.0",
+    "@types/ws": "^8.5.12",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.3"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only ./src/app.ts"
+  },
+  "dependencies": {
+    "uuid": "^10.0.0",
+    "ws": "^8.18.0"
+  }
+}

@@ -1,0 +1,118 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjbivcw033bln"]
+
+[ext_resource type="Script" path="res://levels/menu/menu.gd" id="1_4pwt6"]
+[ext_resource type="Texture2D" uid="uid://bja0wl8tcw71c" path="res://art/backgrounds/background_01.png" id="1_kpli0"]
+[ext_resource type="Texture2D" uid="uid://bujx43rcy5b85" path="res://art/backgrounds/background_02.png" id="2_dxcgo"]
+[ext_resource type="PackedScene" uid="uid://dbl6u82pqtyc4" path="res://levels/level_01/level_01.tscn" id="2_fygf5"]
+
+[node name="Menu" type="Node" node_paths=PackedStringArray("ui", "level_container", "ip_input", "status_label", "not_connected_hbox", "host_hbox")]
+script = ExtResource("1_4pwt6")
+ui = NodePath("UI")
+level_container = NodePath("Level")
+level_scene = ExtResource("2_fygf5")
+ip_input = NodePath("UI/NotConnectedHBox/IPInput2")
+status_label = NodePath("UI/StatusLabel")
+not_connected_hbox = NodePath("UI/NotConnectedHBox")
+host_hbox = NodePath("UI/HostHBox")
+
+[node name="Level" type="Node" parent="."]
+
+[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://levels/level_01/level_01.tscn")
+spawn_path = NodePath("../Level")
+spawn_limit = 1
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundTrees" type="TextureRect" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kpli0")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="BackgroundHouses" type="TextureRect" parent="UI/BackgroundTrees"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dxcgo")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="NotConnectedHBox" type="HBoxContainer" parent="UI"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 20.0
+offset_right = 769.0
+offset_bottom = 62.0
+
+[node name="HostButton" type="Button" parent="UI/NotConnectedHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="UI/NotConnectedHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Join
+"
+
+[node name="IPInput2" type="LineEdit" parent="UI/NotConnectedHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "127.0.0.1:8080"
+placeholder_text = "127.0.0.1:8080"
+
+[node name="HostHBox" type="HBoxContainer" parent="UI"]
+visible = false
+layout_mode = 0
+offset_left = 19.0
+offset_top = 20.0
+offset_right = 369.0
+offset_bottom = 62.0
+
+[node name="StartButton" type="Button" parent="UI/HostHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Start"
+
+[node name="StatusLabel" type="Label" parent="UI"]
+layout_mode = 2
+offset_left = 536.0
+offset_top = 298.0
+offset_right = 801.0
+offset_bottom = 398.0
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Status: "
+
+[node name="MultiplayerBox" type="HBoxContainer" parent="UI"]
+layout_mode = 0
+offset_left = 795.0
+offset_top = 19.0
+offset_right = 1145.0
+offset_bottom = 61.0
+
+[node name="FindMatchButton" type="Button" parent="UI/MultiplayerBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Find Match"
+
+[connection signal="pressed" from="UI/NotConnectedHBox/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="UI/NotConnectedHBox/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="UI/HostHBox/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/MultiplayerBox/FindMatchButton" to="." method="_on_find_match_button_pressed"]
